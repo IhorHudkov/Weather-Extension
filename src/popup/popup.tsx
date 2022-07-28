@@ -1,24 +1,57 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Paper, InputBase, IconButton } from '@mui/material';
+import { Grid, Box, Paper, InputBase, IconButton } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import './popup.css';
 import WeatherCard from './WeatherCard';
 
 const App: React.FC<{}> = () => {
-  const [cities, setCities] = useState<string[]>(['Toronto', 'Kyiv', 'Error']);
+  const [cities, setCities] = useState<string[]>([]);
+  const [cityInput, setCityInput] = useState<string>('');
+
+  const handleCityButtonClick = () => {
+    if (cityInput === '') {
+      return;
+    }
+    setCities((prev) => [...prev, cityInput]);
+    setCityInput('');
+  };
+
+  const handleDeleteButtonClick = (index) => {
+    cities.splice(index, 1);
+    setCities([...cities]);
+  };
+
   return (
-    <div>
-      <Paper>
-        <InputBase />
-        <IconButton>
-          <AddIcon />
-        </IconButton>
-      </Paper>
+    <Box mx="8px" my="16px">
+      <Grid container>
+        <Grid item>
+          <Paper>
+            <Box px="15px" py="5px">
+              <InputBase
+                placeholder="Add a city name"
+                value={cityInput}
+                onChange={(event) => {
+                  setCityInput(event.target.value);
+                }}
+              />
+              <IconButton onClick={handleCityButtonClick}>
+                <AddIcon />
+              </IconButton>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
+
       {cities.map((city, index) => (
-        <WeatherCard city={city} key={index} />
+        <WeatherCard
+          city={city}
+          key={index}
+          onDelete={() => handleDeleteButtonClick(index)}
+        />
       ))}
-    </div>
+      <Box height="16px" />
+    </Box>
   );
 };
 
