@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Grid, Box, Paper, InputBase, IconButton } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import './popup.css';
 import WeatherCard from './WeatherCard';
+import { getStoredCities } from '../utils/storage';
 
 const App: React.FC<{}> = () => {
   const [cities, setCities] = useState<string[]>([]);
   const [cityInput, setCityInput] = useState<string>('');
+
+  useEffect(() => {
+    getStoredCities().then((cities) => setCities([...cities]));
+  }, []);
 
   const handleCityButtonClick = () => {
     if (cityInput === '') {
