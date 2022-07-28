@@ -4,7 +4,7 @@ import { Grid, Box, Paper, InputBase, IconButton } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import './popup.css';
 import WeatherCard from './WeatherCard';
-import { getStoredCities } from '../utils/storage';
+import { getStoredCities, setStoredCities } from '../utils/storage';
 
 const App: React.FC<{}> = () => {
   const [cities, setCities] = useState<string[]>([]);
@@ -18,13 +18,23 @@ const App: React.FC<{}> = () => {
     if (cityInput === '') {
       return;
     }
-    setCities((prev) => [...prev, cityInput]);
-    setCityInput('');
+
+    const updatedCities = [...cities, cityInput];
+
+    setStoredCities(updatedCities).then(() => {
+      setCities(updatedCities);
+      setCityInput('');
+    });
   };
 
   const handleDeleteButtonClick = (index) => {
     cities.splice(index, 1);
-    setCities([...cities]);
+
+    const updatedCities = [...cities];
+
+    setStoredCities(updatedCities).then(() => {
+      setCities(updatedCities);
+    });
   };
 
   return (
