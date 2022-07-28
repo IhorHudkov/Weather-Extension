@@ -26,7 +26,7 @@ export async function fetchOpenWeatherData(
   sity: string
 ): Promise<OpenWeatherData> {
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${sity}&appid=${config.OPEN_WEATHER_API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?q=${sity}&units=metric&appid=${config.OPEN_WEATHER_API_KEY}`
   );
 
   if (!res.ok) {

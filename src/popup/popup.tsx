@@ -1,18 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Paper, InputBase, IconButton } from '@mui/material';
+import { Add as AddIcon } from '@mui/icons-material';
 import './popup.css';
-import { fetchOpenWeatherData } from '../utils/api';
+import WeatherCard from './WeatherCard';
 
 const App: React.FC<{}> = () => {
-  useEffect(() => {
-    fetchOpenWeatherData('Toronto')
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-  }, []);
-
+  const [cities, setCities] = useState<string[]>(['Toronto', 'Kyiv', 'Error']);
   return (
     <div>
-      <img src="icon.png" />
+      <Paper>
+        <InputBase />
+        <IconButton>
+          <AddIcon />
+        </IconButton>
+      </Paper>
+      {cities.map((city, index) => (
+        <WeatherCard city={city} key={index} />
+      ))}
     </div>
   );
 };
