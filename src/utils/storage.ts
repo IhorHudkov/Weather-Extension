@@ -8,6 +8,7 @@ export interface LocalStorage {
 export interface LocalStorageOptions {
   tempScale: OpenWeatherTempScale;
   homeCity: string;
+  hasAutoOverlay: boolean;
 }
 
 export type LocalStorageKeys = keyof LocalStorage;

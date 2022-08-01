@@ -9,6 +9,7 @@ import {
   TextField,
   Box,
   Button,
+  Switch,
 } from '@mui/material';
 import './options.css';
 import {
@@ -45,6 +46,13 @@ const App: React.FC<{}> = () => {
     });
   };
 
+  const handleAutoOverlayChange = (hasAutoOverlay: boolean) => {
+    setOptions({
+      ...options,
+      hasAutoOverlay,
+    });
+  };
+
   const isFieldsDisabled = formState === 'saving';
 
   return (
@@ -63,6 +71,17 @@ const App: React.FC<{}> = () => {
                 value={options.homeCity}
                 onChange={(event) => handleHomeCityChange(event.target.value)}
                 disabled={isFieldsDisabled}
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant="body1">
+                Auto toggle overlay on webpage load
+              </Typography>
+              <Switch
+                color="primary"
+                disabled={isFieldsDisabled}
+                onChange={(event, checked) => handleAutoOverlayChange(checked)}
+                checked={options.hasAutoOverlay}
               />
             </Grid>
             <Grid item>
